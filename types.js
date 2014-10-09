@@ -18,7 +18,7 @@ prefixes[levels.FAIL   ]  =  "F";
 
 module.exports = {
 
-  // logs are assigned as level to denote
+  // logs are assigned a level to denote
   // levels of importance of criticality.
   levels: Object.freeze(levels),
 
