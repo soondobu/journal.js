@@ -20,11 +20,11 @@ module.exports = {
 
   // logs are assigned as level to denote
   // levels of importance of criticality.
-  levels: levels,
+  levels: Object.freeze(levels),
 
   // Line prefixes provide easy visual markers
   // for human parsing and reading, along with
   // helping programmatic filtering.
-  prefixes: prefixes
+  prefixes: Object.freeze(prefixes)
 
 };
