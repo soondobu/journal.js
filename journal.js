@@ -1,7 +1,7 @@
 var types           = require('./types'),
     levels          = types.levels,
     ConsoleHandler  = require('./handlers/console'),
-    errors          = require('./errordefs');
+    errors          = require('./errors');
 
 
 var available_  = {},
@@ -28,7 +28,7 @@ function addHandler(name) {
       handler;
 
   if ( !Constructor ) {
-    throw errors.UnknownError();
+    throw new errors.UnknownError();
   }
   handler = new Constructor();
 
