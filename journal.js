@@ -1,15 +1,40 @@
 var types           = require('./types'),
     levels          = types.levels,
-    ConsoleHandler  = require('./handlers/console');
+    ConsoleHandler  = require('./handlers/console'),
+    errors          = require('./errordefs');
 
-// Initial loading will register a console handler
-// and any other defaults (handlers are mutable though).
-var handlers_ = (function() {
+
+var available_  = {},
+    handlers_;
+
+// Start with a console handler
+handlers_ = (function() {
   var ch    = new ConsoleHandler(),
       arr   = [];
   arr.push(ch);
   return arr;
 })();
+
+function removeHandler(name) {
+  handlers_.forEach(function(obj, idx, arr) {
+    if ( obj.getName() === name ) {
+      arr.splice(idx, 1);
+    }
+  });
+}
+
+function addHandler(name) {
+  var Constructor = available_[name] || undefined,
+      handler;
+
+  if ( !Constructor ) {
+    throw errors.UnknownError();
+  }
+  handler = new Constructor();
+
+
+
+}
 
 function setInterest(handlerName, level) {
   handlers_.forEach(function(obj, idx, arr) {
@@ -59,5 +84,11 @@ module.exports = {
   setInterest: setInterest,
 
   // Enumeration of levels for ease of use
-  levels: levels
+  levels: levels,
+
+  // Add a new handler (type of output)
+  addHandler: addHandler,
+
+  // Remove a handler (ie stop logging to file)
+  removeHandler: removeHandler
 };
