@@ -1,10 +1,22 @@
+//  errors.js
+//
+//
+//
+//
+//------------------------------------------------------
 
-var util = require('util');
+//------------------------------------------------------
+// Dependencies
+//------------------------------------------------------
 
+var util        = require('util');
 
+//------------------------------------------------------
+// Internal
+//------------------------------------------------------
 
-var ERRORS = {};
-
+//
+//------------------------------------------------------
 var errFactory = function(name, message) {
 
   function cTor () {
@@ -18,7 +30,24 @@ var errFactory = function(name, message) {
   return cTor;
 };
 
+//------------------------------------------------------
+// Public
+//------------------------------------------------------
 
-ERRORS.UnknownError = errFactory("Unknown error",
-                                 "An unknown error has occurred.");
-module.exports = ERRORS;
+var errors = {};
+
+//
+//------------------------------------------------------
+errors.Unknown          = errFactory("Unknown error",
+                                     "An unknown error has occurred.");
+
+//
+//------------------------------------------------------
+errors.UnknownHandler   = errFactory("Unknown Handler",
+                                     "Specified handler is not defined.");
+
+
+//------------------------------------------------------
+// Interface
+//------------------------------------------------------
+module.exports = errors;

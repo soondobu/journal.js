@@ -1,74 +1,134 @@
+//  journal.js
+//
+//
+//
+//
+//------------------------------------------------------
+
+//------------------------------------------------------
+// Dependencies
+//------------------------------------------------------
+
 var types           = require('./types'),
     levels          = types.levels,
     ConsoleHandler  = require('./handlers/console'),
-    errors          = require('./errors');
+    err             = require('./errors');
 
+//------------------------------------------------------
+// Error Declarations
+//------------------------------------------------------
+var UnknownHandlerError = err.UnknownHandler;
 
-var available_  = {},
-    handlers_;
+//------------------------------------------------------
+// Internal
+//------------------------------------------------------
 
-// Start with a console handler
-handlers_ = (function() {
-  var ch    = new ConsoleHandler(),
-      arr   = [];
-  arr.push(ch);
-  return arr;
-})();
+var console_    = new ConsoleHandler(), // default
+    available_,
+    active_;
 
-function removeHandler(name) {
-  handlers_.forEach(function(obj, idx, arr) {
-    if ( obj.getName() === name ) {
-      arr.splice(idx, 1);
-    }
+active_   = {
+  'console': console_
+};
+
+//TODO: Abstract handler registration into handlers/index
+//      module.
+available_ = {
+  'console': ConsoleHandler
+};
+
+function getRegisteredHandlers_() {
+  var keys = Object.keys( active_ );
+
+  return keys.map(function( attr ) {
+    return active_[attr];
   });
 }
 
+function handlerIsActive_(handler) {
+  return active_[handler] || false;
+}
+
+//------------------------------------------------------
+// Public
+//------------------------------------------------------
+
+//
+//------------------------------------------------------
+function removeHandler(name) {
+  active_[name] = null;
+}
+
+//
+//------------------------------------------------------
 function addHandler(name) {
   var Constructor = available_[name] || undefined,
       handler;
 
   if ( !Constructor ) {
-    throw new errors.UnknownError();
+    throw new UnknownHandlerError();
   }
-  handler = new Constructor();
 
+  if ( !handlerIsActive_(name) ) {
+    return;
+  }
 
-
+  active_[name] = new Constructor();
 }
 
+//
+//------------------------------------------------------
 function setInterest(handlerName, level) {
-  handlers_.forEach(function(obj, idx, arr) {
-    if ( obj.getName() === handlerName ) {
-      obj.interest = level;
-    }
-  });
+  if ( !handlerIsActive_(handlerName) ) {
+    return;
+  }
+
+  active_[handlerName].interest = level;
 }
 
+//
+//------------------------------------------------------
 function dispatch(level, args) {
-  handlers_.forEach(function(obj, idx, arr) {
+  var handlers = getRegisteredHandlers_();
+
+  handlers.forEach(function(obj, idx, arr) {
     obj.write(level, args);
   });
 }
 
+//
+//------------------------------------------------------
 function debug() {
   dispatch(levels.DEBUG, Array.prototype.slice.call(arguments));
 }
 
+//
+//------------------------------------------------------
 function info() {
   dispatch(levels.INFO, Array.prototype.slice.call(arguments));
 }
 
+//
+//------------------------------------------------------
 function error() {
   dispatch(levels.ERROR, Array.prototype.slice.call(arguments));
 }
 
+//
+//------------------------------------------------------
 function warn() {
   dispatch(levels.WARN, Array.prototype.slice.call(arguments));
 }
 
+//
+//------------------------------------------------------
 function fail() {
   dispatch(levels.FAIL, Array.prototype.slice.call(arguments));
 }
+
+//------------------------------------------------------
+// Interface
+//------------------------------------------------------
 
 module.exports = {
 
