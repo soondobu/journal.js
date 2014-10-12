@@ -17,8 +17,11 @@ var types           = require('../types'),
 // Internal
 //------------------------------------------------------
 
-var HANDLER_NAME = "file",
-    DEFAULTS_    = {};
+var HANDLER_NAME = "file";
+
+var DEFAULTS = {
+  interest: 1
+};
 
 //------------------------------------------------------
 // Public
@@ -27,7 +30,7 @@ var HANDLER_NAME = "file",
 //
 //------------------------------------------------------
 function FileHandler( options ) {
-  options = options || DEFAULTS_;
+  options = options || DEFAULTS;
   this.interest = options.interest || 1;
 }
 

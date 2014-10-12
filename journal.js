@@ -23,30 +23,30 @@ var UnknownHandlerError = err.UnknownHandler;
 // Internal
 //------------------------------------------------------
 
-var console_    = new ConsoleHandler(), // default
-    available_,
-    active_;
+var _console    = new ConsoleHandler(),
+    _available,
+    _active;
 
-active_   = {
-  'console': console_
+_active   = {
+  'console': _console
 };
 
 //TODO: Abstract handler registration into handlers/index
 //      module.
-available_ = {
+_available = {
   'console': ConsoleHandler
 };
 
 function getRegisteredHandlers_() {
-  var keys = Object.keys( active_ );
+  var keys = Object.keys( _active );
 
   return keys.map(function( attr ) {
-    return active_[attr];
+    return _active[attr];
   });
 }
 
-function handlerIsActive_(handler) {
-  return active_[handler] || false;
+function handlerIs_active(handler) {
+  return _active[handler] || false;
 }
 
 //------------------------------------------------------
@@ -56,34 +56,37 @@ function handlerIsActive_(handler) {
 //
 //------------------------------------------------------
 function removeHandler(name) {
-  active_[name] = null;
+  _active[name] = null;
+  return true;
 }
 
 //
 //------------------------------------------------------
 function addHandler(name) {
-  var Constructor = available_[name] || undefined,
+  var Constructor = _available[name] || undefined,
       handler;
 
   if ( !Constructor ) {
     throw new UnknownHandlerError();
   }
 
-  if ( !handlerIsActive_(name) ) {
-    return;
+  if ( !handlerIs_active(name) ) {
+    return true;
   }
 
-  active_[name] = new Constructor();
+  _active[name] = new Constructor();
+  return true;
 }
 
 //
 //------------------------------------------------------
 function setInterest(handlerName, level) {
-  if ( !handlerIsActive_(handlerName) ) {
-    return;
+  if ( !handlerIs_active(handlerName) ) {
+    return false;
   }
 
-  active_[handlerName].interest = level;
+  _active[handlerName].interest = level;
+  return true;
 }
 
 //

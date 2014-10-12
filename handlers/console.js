@@ -17,11 +17,12 @@ var types           = require('../types'),
 // Internal
 //------------------------------------------------------
 
-var DEFAULTS_ = {
+var HANDLER_NAME = 'console';
+
+var DEFAULTS = {
   interest: 1
 };
 
-var HANDLER_NAME = 'console';
 
 //------------------------------------------------------
 // Public
@@ -30,7 +31,7 @@ var HANDLER_NAME = 'console';
 //
 //------------------------------------------------------
 function ConsoleHandler( options ) {
-  options = options || DEFAULTS_;
+  options = options || DEFAULTS;
   this.interest = options.interest || 1;
 }
 
