@@ -10,6 +10,7 @@
 //------------------------------------------------------
 
 var types           = require('../types'),
+    colors          = require('../colors'),
     levels          = types.levels,
     prefixes        = types.prefixes;
 
@@ -33,6 +34,7 @@ var DEFAULTS = {
 function ConsoleHandler( options ) {
   options = options || DEFAULTS;
   this.interest = options.interest || 1;
+  this._colorEnabled = colors.areSupported();
 }
 
 //
@@ -51,11 +53,20 @@ ConsoleHandler.prototype.interested = function(level) {
 //------------------------------------------------------
 ConsoleHandler.prototype.write = function(level, args) {
   var timestamp,
-      prefix;
+      prefix,
+      color = types.colors[level] || undefined;
   if ( this.interested(level) ) {
     timestamp = (new Date()).toString();
     prefix = prefixes[level] || "";
+
+    if ( this._colorEnabled && color ) {
+      timestamp = colors.make('white', timestamp);
+      prefix    = colors.make(color, prefix);
+      args      = colors.make(color, args);
+    }
+
     args.unshift(prefix, timestamp);
+
     console.log.apply(this, args);
   }
 };
