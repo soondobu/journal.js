@@ -22,11 +22,33 @@ journal.debug("Only debug useful...");
 journal.warn("Uh oh!!!!!");
 journal.error("Passing my error callback!");
 
-F Mon Oct 06 2014 21:03:02 GMT-0700 (PDT) Something critical happened!
-I Mon Oct 06 2014 21:03:02 GMT-0700 (PDT) Some information!
-D Mon Oct 06 2014 21:03:02 GMT-0700 (PDT) Only debug useful...
-W Mon Oct 06 2014 21:03:02 GMT-0700 (PDT) Uh oh!!!!!
-E Mon Oct 06 2014 21:03:02 GMT-0700 (PDT) Passing my error callback!
+F Sun Oct 12 2014 22:55:07 GMT-0700 (PDT)  Something critical happened!
+I Sun Oct 12 2014 22:55:07 GMT-0700 (PDT)  Some information!
+D Sun Oct 12 2014 22:55:07 GMT-0700 (PDT)  Only debug useful...
+W Sun Oct 12 2014 22:55:07 GMT-0700 (PDT)  Uh oh!!!!!
+E Sun Oct 12 2014 22:55:07 GMT-0700 (PDT)  Passing my error callback!
+
+```
+
+Changing log levels can be done like this:
+
+```
+journal.setInterest("console", journal.levels.WARN);
+
+journal.fail("Something critical happened!");
+journal.info("Some information!");
+journal.debug("Only debug useful...");
+journal.warn("Uh oh!!!!!");
+journal.error("Passing my error callback!");
+```
+
+Which would only result in the following output, since the interest has been
+set to only allow certain levels and higher:
+
+```
+F Sun Oct 12 2014 22:55:07 GMT-0700 (PDT)  Something critical happened!
+W Sun Oct 12 2014 22:55:07 GMT-0700 (PDT)  Uh oh!!!!!
+
 
 
 ```
