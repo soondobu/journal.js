@@ -9,12 +9,27 @@ a canonical version.
 
 Feel free to suggest improvements or provide feedback!
 
-### Usage
+### Installation
 
-Very simple:
+journal.js is on npm. You can install it like any node package:
 
 ```
-var journal = require ('journal');
+npm install journal-js
+
+```
+
+Then require it when you need it:
+```
+var journal = require('journal-js');
+```
+
+
+### Usage
+
+Usage is very straightforward:
+
+```
+var journal = require('journal-js');
 
 journal.fail("Something critical happened!");
 journal.info("Some information!");

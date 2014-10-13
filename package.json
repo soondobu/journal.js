@@ -1,7 +1,7 @@
 {
-  "name": "journal.js",
+  "name": "journal-js",
   "version": "0.1.0",
-  "description": "Everyday, small project, simple logging wrapper for node.js",
+  "description": "Simple, everyday logging wrapper for node.js with no dependencies",
   "main": "journal.js",
   "repository": {
     "type": "git",
