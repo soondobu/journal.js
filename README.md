@@ -4,9 +4,6 @@
 Most small projects can benefit from a really simple wrapper around console.log,
 providing nice facilities for different types of messages and automatically including a timestamp.
 
-Also, I usually end up recreating something like this for every project and thought I'd just make
-a canonical version.
-
 Feel free to suggest improvements or provide feedback!
 
 ### Installation
