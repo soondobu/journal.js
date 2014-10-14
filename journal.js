@@ -31,8 +31,6 @@ _active   = {
   'console': _console
 };
 
-//TODO: Abstract handler registration into handlers/index
-//      module.
 _available = {
   'console': ConsoleHandler
 };
