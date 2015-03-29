@@ -1,10 +1,10 @@
 
+#### Please feel free to suggest improvements or provide feedback! You can just create a Github issue on this project!
 ### Why?
 
 Most small projects can benefit from a really simple wrapper around console.log,
 providing nice facilities for different types of messages and automatically including a timestamp.
 
-Feel free to suggest improvements or provide feedback!
 
 ### Installation
 
